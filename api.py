@@ -37,6 +37,9 @@ def updateUsers(message):
     record_to_insert = (message.from_user.id, 0, '')
     cursor.execute(postgres_insert_query, record_to_insert)    
     conn.commit()
+def setLocation(location, id):
+    cursor.execute(f"UPDATE users SET location='{location}' WHERE user_id={id}")    
+    conn.commit()
 def getOrders(platform):
     cursor.execute(f"SELECT * FROM orders WHERE platform='{platform}' AND location IS NULL")
     orders = cursor.fetchall()

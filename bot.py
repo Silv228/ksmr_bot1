@@ -2,7 +2,7 @@ import telebot
 from config import TOKEN
 from payout import payout
 from platforms import platforms
-from api import getUser, updateUsers, getOrders
+from api import getUser, updateUsers, getOrders, setLocation
 from state import State
 from pages import orderPage, mainPage
 
@@ -51,9 +51,12 @@ def start(message):
     print(user)
     if (len(user) == 0):
         updateUsers(message)
+        state.resetState()
+        state.setProfile(True)
+        bot.send_message(message.chat.id, text='Добавьте локацию:')
         create_main_keyboard(chat_id = message.chat.id, message = 'Здесь будет инструкция')
     else:
-        page = mainPage(message.from_user.username, user[0][1], user[0][0])
+        page = mainPage(message.from_user.username, user[0][1], user[0][0], user[0][2])
         create_main_keyboard(chat_id = message.chat.id, message = page)
 
 @bot.message_handler(func=lambda message: message.text=='Главное меню')
@@ -73,6 +76,8 @@ def find_order(message):
             ordres = getOrders(message.text)
             page = orderPage(ordres[0][3], ordres[0][2], ordres[0][4], ordres[0][0])
             create_order_keyboard(chat_id = message.chat.id, message = page)
+    if(state.getState()['in_profile']):
+        setLocation(location=message.text, id=message.from_user.id)
         
 @bot.message_handler(func=lambda message: message.text=='Вывод')
 def payout_f(message):
