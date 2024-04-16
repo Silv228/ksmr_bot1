@@ -41,6 +41,8 @@ def create_platforms_keyboard(chat_id, message):
 
 def create_change_payout_keyboard(chat_id, message): 
     keyboard = telebot.types.ReplyKeyboardMarkup(row_width=2)
+    payout = telebot.types.KeyboardButton(text="Продолжить выплату")
+    keyboard.add(payout)
     change_payment = telebot.types.KeyboardButton(text="Сменить способ оплаты")
     keyboard.add(change_payment)
     mainMenu = telebot.types.KeyboardButton(text="Главное меню")

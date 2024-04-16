@@ -22,7 +22,7 @@ MAIN MENU
             
 <i>{username}</i> 
 id: <code>{id}</code> 
-Баланс: {balance} 
+Баланс: {balance} ₽
 
 Локация: {location}''')
 
@@ -32,7 +32,7 @@ def orderPage(order_name, price, link, platform):
            
 {order_name} 
 {link} 
-{price}''')
+{price} ₽''')
 
 def paymentPage(payment):
     return(f'''

@@ -4,6 +4,7 @@ class State:
         self._in_order = False
         self._in_payment = False
         self._payment = ''
+        self._in_payout = False
         self._in_profile = False
         self._order = ''
         self._orders = {
@@ -15,6 +16,7 @@ class State:
         self._in_orders = False
         self._in_order = False
         self._in_payment = False
+        self._in_payout = False
         self._in_profile = False
         self._payment = ''
         self._order = ''
@@ -24,6 +26,8 @@ class State:
         self._in_order = newState
     def setInPayment(self, newState):
         self._in_payment = newState
+    def setInPayout(self, newState):
+        self._in_payout = newState
     def setPayment(self, newPayment):
         self._payment = newPayment
     def setInProfile(self, newState):
@@ -40,6 +44,7 @@ class State:
         return {'in_order': self._in_order,
                 'in_orders': self._in_orders, 
                 'in_payment': self._in_payment,
+                'in_payout': self._in_payout,
                 'payment': self._payment, 
                 'in_profile': self._in_profile,
                 'order': self._order,
