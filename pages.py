@@ -1,5 +1,41 @@
+def decoder_payment(payment):
+    match(payment[0]):
+        case('Y'):
+            return f'''
+<b>Юмани</b>
+<code>{payment[2:]}</code>
+            '''
+        case('S'):
+            return f'''
+<b>Сбербанк</b>
+<code>{payment[2:]}</code>
+            '''
+        case('T'):
+            return f'''
+<b>Тинкофф</b>
+<code>{payment[2:]}</code>
+            '''
+
 def mainPage(username, id, balance, location): 
-    return (f'{username} \nid: {id} \nБаланс: {balance} \nЛокация: {location}')
+    return (f'''
+MAIN MENU
+            
+<i>{username}</i> 
+id: <code>{id}</code> 
+Баланс: {balance} 
+
+Локация: {location}''')
 
 def orderPage(order_name, price, link, platform):
-    return(f'[{platform}] \n{order_name} \n{link} \n{price} ')
+    return(f'''
+[{platform}]
+           
+{order_name} 
+{link} 
+{price}''')
+
+def paymentPage(payment):
+    return(f'''
+Текущий вариант оплаты:         
+{decoder_payment(payment)}
+''')
