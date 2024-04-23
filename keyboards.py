@@ -5,6 +5,11 @@ from config import TOKEN
 
 bot = telebot.TeleBot(token=TOKEN, parse_mode=None)
 
+def reset_keyboard(chat_id, message):
+    keyboard = telebot.types.ReplyKeyboardMarkup(row_width=1)
+    mainMenu = telebot.types.KeyboardButton(text="Главное меню")
+    keyboard.add(mainMenu)
+    bot.send_message(chat_id=chat_id, text=message, reply_markup=keyboard, parse_mode='HTML')
 def create_main_keyboard(chat_id, message): 
     keyboard = telebot.types.ReplyKeyboardMarkup(row_width=2)
     find_offer = telebot.types.KeyboardButton(text="Найти заказ")

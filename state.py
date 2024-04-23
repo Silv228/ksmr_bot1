@@ -6,6 +6,7 @@ class State:
         self._payment = ''
         self._in_payout = False
         self._in_profile = False
+        self._in_tasks = False
         self._order = ''
         self._orders = {
             'ordersList': [],
@@ -18,6 +19,7 @@ class State:
         self._in_payment = False
         self._in_payout = False
         self._in_profile = False
+        self._in_tasks = False
         self._payment = ''
         self._order = ''
     def setInOrders(self, newState):
@@ -34,6 +36,8 @@ class State:
         self._in_profile = newState
     def setOrder(self, newOrder):
         self._order = newOrder
+    def setInTasks(self, newState):
+        self._in_tasks = newState
     def setOrders(self, orders, cursor):
         self._orders = {
             'ordersList': orders,
@@ -48,5 +52,6 @@ class State:
                 'payment': self._payment, 
                 'in_profile': self._in_profile,
                 'order': self._order,
-                'orders': self._orders
+                'orders': self._orders,
+                'in_tasks': self._in_tasks 
                 }

@@ -51,10 +51,13 @@ def getPayment(user_id):
     cursor.execute(f"SELECT requisites FROM payments WHERE user_id={user_id}")
     current_payment = cursor.fetchall()
     return current_payment
-def getOrders(platform, user_id):
+def getOrders(platform):
     cursor.execute(f"SELECT * FROM orders WHERE platform='{platform}' AND count>0")
     orders = cursor.fetchall()
     return orders
 def takeOrder(order_id):
     cursor.execute(f"UPDATE orders SET count=count-1 WHERE id='{order_id}'")    
+    conn.commit()
+def updateTask(name, orderId):
+    cursor.execute(f"INSERT INTO tasks VALUES ({orderId}, '{name}')")
     conn.commit()
