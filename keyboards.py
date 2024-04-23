@@ -16,6 +16,8 @@ def create_main_keyboard(chat_id, message):
     keyboard.add(find_offer)
     payout = telebot.types.KeyboardButton(text="Вывод")
     keyboard.add(payout)
+    location = telebot.types.KeyboardButton(text="Изменить локацию")
+    keyboard.add(location)
     bot.send_message(chat_id=chat_id, text=message, reply_markup=keyboard, parse_mode='HTML')
 
 def create_order_keyboard(chat_id, message): 

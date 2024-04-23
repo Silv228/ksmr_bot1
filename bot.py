@@ -12,7 +12,6 @@ bot = telebot.TeleBot(token=TOKEN, parse_mode=None)
 
 state = State()
 
-
 @bot.message_handler(commands=['start'])
 def start(message):
     user = getUser(message.from_user.id)
@@ -20,12 +19,11 @@ def start(message):
     if (len(user) == 0):
         updateUsers(message)
         state.setInProfile(True)
-        bot.send_message(message.chat.id, text='Добавьте локацию:')
+        reset_keyboard(chat_id=message.chat.id, message='Добавьте локацию:')
     else:
         page = mainPage(message.from_user.username,
                         user[0][0], user[0][2], user[0][1])
         create_main_keyboard(chat_id=message.chat.id, message=page)
-
 
 @bot.message_handler(func=lambda message: message.text == 'Главное меню')
 def main_menu(message):
@@ -67,7 +65,9 @@ def handleText(message):
         main_menu(message)
     if (state.getState()['in_payment']):
         Payment_handler(message, state)
-
+    if (message.text == 'Изменить локацию'):
+        state.setInProfile(True)
+        reset_keyboard(chat_id=message.chat.id, message='Добавьте локацию:')
 
 @bot.message_handler(content_types=['photo'])
 def handleImages(message):
@@ -89,7 +89,6 @@ def handleImages(message):
             bot.send_message(
                 chat_id=message.chat.id, text='Произошла ошибка, попробуйте другое задание')
             find_orders(message)
-
 
 if (__name__ == '__main__'):
     bot.infinity_polling()
