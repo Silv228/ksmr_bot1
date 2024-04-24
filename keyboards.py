@@ -1,9 +1,9 @@
 import telebot
 from platforms import platforms
 from payout import payout
-from config import TOKEN
+from decouple import config
 
-bot = telebot.TeleBot(token=TOKEN, parse_mode=None)
+bot = telebot.TeleBot(token=config('TOKEN'), parse_mode=None)
 
 def reset_keyboard(chat_id, message):
     keyboard = telebot.types.ReplyKeyboardMarkup(row_width=1)

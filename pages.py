@@ -16,13 +16,14 @@ def decoder_payment(payment):
 <code>{payment[2:]}</code>
             '''
 
-def mainPage(username, id, balance, location): 
+def mainPage(username, id, balance, location, progress = 0): 
     return (f'''
 MAIN MENU
             
 <i>{username}</i> 
 id: <code>{id}</code> 
 Баланс: {balance} ₽
+На проверке: {progress}
 
 Локация: {location}''')
 

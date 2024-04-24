@@ -1,7 +1,6 @@
 from psycopg2 import OperationalError
 import psycopg2
-
-from config import PGSQL_DATABASE, PGSQL_HOST, PGSQL_PORT, PGSQL_PASSWORD, PGSQL_USER
+from decouple import config
 from exceptions import BalanceErr
 
 def create_connection(db_name, db_user, db_password, db_host, db_port):
@@ -19,7 +18,7 @@ def create_connection(db_name, db_user, db_password, db_host, db_port):
         print(f"The error '{e}' occurred")
     return connection
 
-conn = create_connection(PGSQL_DATABASE, PGSQL_USER, PGSQL_PASSWORD, PGSQL_HOST, PGSQL_PORT)
+conn = create_connection(config('PGSQL_DATABASE'), config('PGSQL_USER'), config('PGSQL_PASSWORD'), config('PGSQL_HOST'), config('PGSQL_PORT'))
 cursor = conn.cursor()
 
 def getUser(user_id):
@@ -58,6 +57,10 @@ def getOrders(platform):
 def takeOrder(order_id):
     cursor.execute(f"UPDATE orders SET count=count-1 WHERE id='{order_id}'")    
     conn.commit()
-def updateTask(name, orderId):
-    cursor.execute(f"INSERT INTO tasks VALUES ({orderId}, '{name}')")
+def updateTask(name, orderId, user_id):
+    cursor.execute(f"INSERT INTO tasks (order_id, name, published, user_id) VALUES ('{orderId}', '{name}', False, {user_id})")
     conn.commit()
+def countProgress(user_id): 
+    cursor.execute(f"SELECT COUNT(order_id) FROM tasks WHERE user_id={user_id}")
+    count = cursor.fetchone()
+    return count[0]

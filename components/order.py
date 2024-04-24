@@ -1,10 +1,10 @@
-from config import TOKEN
 import telebot
+from decouple import config
 from platforms import platforms
 from api import getOrders
 from pages import orderPage
 from keyboards import create_order_keyboard
-bot = telebot.TeleBot(token=TOKEN, parse_mode=None)
+bot = telebot.TeleBot(token=config('TOKEN'), parse_mode=None)
 
 
 def outOrders(orders, numOrder, state):
@@ -15,7 +15,7 @@ def outOrders(orders, numOrder, state):
 def Orders_handler(message, find_orders, state):
     page = ''
     if (message.text in platforms):
-        orders = getOrders(platform=message.text, user_id=message.from_user.id)
+        orders = getOrders(platform=message.text)
         if (len(orders) > 0):
             page = outOrders(orders, 0, state)
         else:
@@ -26,7 +26,7 @@ def Orders_handler(message, find_orders, state):
         ordersDict = state.getState()['orders']
         orders, maxNum = ordersDict['ordersList'], ordersDict['lentgh']
         numOrder = (ordersDict['cursor'] + 1) % maxNum
-        page = outOrders(orders, numOrder)
+        page = outOrders(orders, numOrder, state)
     if (message.text == 'Взять заказ'):
         state.setInOrder(True)
         bot.send_message(chat_id=message.chat.id,

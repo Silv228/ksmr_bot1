@@ -6,6 +6,7 @@ class State:
         self._payment = ''
         self._in_payout = False
         self._in_profile = False
+        self._progress = 0
         self._in_tasks = False
         self._order = ''
         self._orders = {
@@ -34,6 +35,8 @@ class State:
         self._payment = newPayment
     def setInProfile(self, newState):
         self._in_profile = newState
+    def setProgress(self, newState):
+        self._progress = newState
     def setOrder(self, newOrder):
         self._order = newOrder
     def setInTasks(self, newState):
@@ -51,6 +54,7 @@ class State:
                 'in_payout': self._in_payout,
                 'payment': self._payment, 
                 'in_profile': self._in_profile,
+                'progress': self._progress,
                 'order': self._order,
                 'orders': self._orders,
                 'in_tasks': self._in_tasks 

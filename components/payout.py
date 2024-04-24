@@ -1,11 +1,12 @@
 import telebot
 import re
-from config import TOKEN
+from decouple import config
 from payout import payout, payoutDict
 from exceptions import BalanceErr
 from api import getUser, updatePayout, updateBalance
 from keyboards import create_payout_keyboard, reset_keyboard
-bot = telebot.TeleBot(token=TOKEN, parse_mode=None)
+
+bot = telebot.TeleBot(token=config('TOKEN'), parse_mode=None)
 
 def Payout_handler(message, req, main_menu, state):
     platformFull = ''
